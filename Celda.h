@@ -1,22 +1,19 @@
 #ifndef __CELDA_H__
 #define __CELDA_H__
 
-#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
 
-
-using namespace std;
-
-class Celda 
+class Celdas 
 {
-    public:
-        bool esunaformula;
-        std:: string formula;
-        double valor;
+public:
+    Celdas(); //Constructor
+    void MatrizHoja();
+    int obtener(const std::string& celda);
 
-        Celda();
-        void tenervalor(double);
         
-    
+    std::map<std::string, int> celdas; // Mapa de celdas
 };
 
 #endif
