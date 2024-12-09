@@ -16,10 +16,15 @@ void Celdas::MatrizHoja() // Hacemos nuestra matriz
         {
             std::stringstream ss;
             ss << i << j;
-            celdas[ss.str()] = 0; // celdas = 0
+            mapadeceldas[ss.str()] = 0; // celdas = 0
         }
     }
     
+}
+
+void Celdas::asignarValorCelda(const string& celda, int valor)
+{
+    mapadeceldas[celda] = valor; // cada celda tiene un valor
 }
 
 bool Celdas::ValidarCelda(const string& celda)
@@ -29,7 +34,7 @@ bool Celdas::ValidarCelda(const string& celda)
 
 int Celdas::obtenerValorCelda(const string& celda)
 {
-    return celdas[celda]; // Da el valor de la celda
+    return mapadeceldas[celda]; // Da el valor de la celda
 }
 
 bool Celdas::esOperador(char operador)
@@ -76,6 +81,23 @@ vector<string> Celdas::dividirOperacion(const string& CadenaIngresada)
     return elementos;
 }
 
+int Celdas::realizarOperacion(int a, int b, char op)
+{
+    switch (op)
+    {
+    case '+':
+    return a + b;
+    case '-':
+    return a - b;
+    case '*':
+    return a * b;
+    case '/':
+    return b =! 0 ? a / b : 0; // se pregunta si b es diferente de cero, si es así, opera.
+    default:
+    return 0;
+    }
+}
+
 int Celdas::calcularOperacion(const string& CadenaIngresada)
 {
     vector<string> elementos = dividirOperacion(CadenaIngresada); // divide la cadena en partes
@@ -103,8 +125,8 @@ int Celdas::calcularOperacion(const string& CadenaIngresada)
         int a = valores.back(); valores.pop_back();
         int b = valores.back(); valores.pop_back();
         char op = operadores.back(); operadores.pop_back();
-        // TODO: agregar una funcion para operar los elementos
+        valores.push_back(realizarOperacion(b, a, op)); // opera
     }
     
-    
+    return valores.back(); // resultado final;
 }

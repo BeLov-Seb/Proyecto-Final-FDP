@@ -24,7 +24,7 @@ void Hoja::mostrarmatriz()
         {
             stringstream ss;
             ss << j << i;
-            cout << "  " << celdas.obtener(ss.str());
+            cout << "  " << celdas.obtenerValorCelda(ss.str());
         }
         cout << endl;
     }
@@ -33,8 +33,8 @@ void Hoja::mostrarmatriz()
 
 bool Hoja::ingresarOperacion(const string& CadenaIngresada)
 {
-    size_t posicion_igual = CadenaIngresada.find('=');
-    if (posicion_igual = string::npos)
+    size_t posicion_igual = CadenaIngresada.find('='); //busca '='
+    if (posicion_igual == string::npos) // si no encuentra '=' retorna 'false'
     {
         return false;
     }
@@ -46,7 +46,8 @@ bool Hoja::ingresarOperacion(const string& CadenaIngresada)
         return false;
     }
     
-    int resultado = celdas.
+    int resultado = celdas.calcularOperacion(expresion);
+    celdas.asignarValorCelda(celda, resultado);
 }
 
 void Hoja::IngresarDatos(){
@@ -55,11 +56,15 @@ void Hoja::IngresarDatos(){
     {
         cout << "Ingrese una operación: ";
         getline(cin, CadenaIngresada);
-        if ()
+        if (ingresarOperacion(CadenaIngresada))
         {
-            /* code */
+            cout << "Cadena ingresada correctamente" << endl;
+        }
+        else 
+        {
+            cout << "Error, intente nuevamente" << endl;
         }
         
-    }
-    
+        mostrarmatriz();
+    } 
 }
