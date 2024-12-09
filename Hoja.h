@@ -7,11 +7,13 @@ class Hoja
 {
     public:
     Hoja();
+    virtual ~Hoja();
     void mostrarmatriz();
     void IngresarDatos();
 
     private:
     Celdas celdas;
+    bool ingresarOperacion(const std::string& CadenaIngresada);
 };
 
 #endif
