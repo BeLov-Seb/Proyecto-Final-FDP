@@ -10,17 +10,18 @@ class Celdas
 public:
     Celdas(); //Constructor
     virtual ~Celdas();
-    void MatrizHoja();
-    void asignarValorCelda(const string&, int);
+
+    void asignarValorCelda(const std::string&, int);
     bool ValidarCelda(const std::string&);
     int obtenerValorCelda(const std::string&);
     int calcularOperacion(const std::string&);
     bool esOperador(char);
-    bool esNumero(const string&);
+    bool esNumero(const std::string&);
     int realizarOperacion(int, int, char);
     std::vector<std::string> dividirOperacion(const std::string&);
 
-        
+private:
+    void matrizInicialHoja();
     std::map<std::string, int> mapadeceldas; // Mapa de celdas
 };
 

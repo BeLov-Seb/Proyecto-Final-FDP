@@ -7,6 +7,7 @@ int main(){
     Hoja PrimerExcel;
 
     PrimerExcel.mostrarmatriz();
+    PrimerExcel.IngresarDatos();
     
 
     return 0;

@@ -17,13 +17,13 @@ void Hoja::mostrarmatriz()
     }
     cout << endl;
 
-    for (auto j = 1; j <= 10; j++)
+    for (auto j = 1; j <= 9; j++)
     {
         cout << j << " ";
-        for (auto i = 'A'; i <= 'Z'; i++)
+        for (auto k = 'A'; k <= 'Z'; k++)
         {
             stringstream ss;
-            ss << j << i;
+            ss << k << j;
             cout << "  " << celdas.obtenerValorCelda(ss.str());
         }
         cout << endl;
@@ -48,14 +48,16 @@ bool Hoja::ingresarOperacion(const string& CadenaIngresada)
     
     int resultado = celdas.calcularOperacion(expresion);
     celdas.asignarValorCelda(celda, resultado);
+    return true;
 }
 
 void Hoja::IngresarDatos(){
     string CadenaIngresada;
     while (true)
     {
-        cout << "Ingrese una operación: ";
+        cout << "Ingrese una operacion: ";
         getline(cin, CadenaIngresada);
+
         if (ingresarOperacion(CadenaIngresada))
         {
             cout << "Cadena ingresada correctamente" << endl;

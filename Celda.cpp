@@ -1,20 +1,23 @@
 #include <sstream>
 #include "Celda.h"
+#include <iostream>
 #include <map>
 #include <cstdlib>
 
 using namespace std;
 
-Celdas::Celdas(){}
+Celdas::Celdas(){
+    matrizInicialHoja();
+}
 Celdas::~Celdas(){}
 
-void Celdas::MatrizHoja() // Hacemos nuestra matriz
+void Celdas::matrizInicialHoja() // Hacemos nuestra matriz inicial
 {
     for (auto i = 'A'; i <= 'Z'; i++)
     {
-        for (auto j = 1; j <= 10; j++)
+        for (auto j = 1; j <= 9; j++)
         {
-            std::stringstream ss;
+            stringstream ss;
             ss << i << j;
             mapadeceldas[ss.str()] = 0; // celdas = 0
         }
@@ -24,12 +27,13 @@ void Celdas::MatrizHoja() // Hacemos nuestra matriz
 
 void Celdas::asignarValorCelda(const string& celda, int valor)
 {
+    cout << "Asignando valor " << valor << " a la celda " << celda << endl; // cerificar que el valor se a asignado correctamente
     mapadeceldas[celda] = valor; // cada celda tiene un valor
 }
 
 bool Celdas::ValidarCelda(const string& celda)
 {
-    return celda.size() == 2 && (celda[0] >= 'A' && celda[0] <= 'Z') && (celda[1] >= '1' && celda[1] <= '10');
+    return celda.size() == 2 && (celda[0] >= 'A' && celda[0] <= 'Z') && (celda[1] >= '1' && celda[1] <= '9');
 }
 
 int Celdas::obtenerValorCelda(const string& celda)
@@ -42,15 +46,16 @@ bool Celdas::esOperador(char operador)
     return operador == '+' || operador == '-' || operador == '*' || operador == '/';
 }
 
-bool Celdas::esNumero(const string& CadenaIngresada)
+bool Celdas::esNumero(const string& Cadena)
 {
-    for (char Numero : CadenaIngresada)
+    for (char Numero : Cadena)
     {
         if (Numero < '0' || Numero > '9')
         {
             return false;
         } 
-    } 
+    }
+    return true; 
 }
 
 vector<string> Celdas::dividirOperacion(const string& CadenaIngresada)

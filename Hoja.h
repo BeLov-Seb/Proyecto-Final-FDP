@@ -5,13 +5,13 @@
 
 class Hoja
 {
-    public:
+public:
     Hoja();
     virtual ~Hoja();
     void mostrarmatriz();
     void IngresarDatos();
 
-    private:
+private:
     Celdas celdas;
     bool ingresarOperacion(const std::string& CadenaIngresada);
 };
