@@ -109,8 +109,9 @@ int Celdas::calcularOperacion(const string& CadenaIngresada)
     vector<int> valores;
     vector<char> operadores;
     
-    for (const auto& elem : elementos) // elem toma cada valor del vector elementos
+    for (auto i = 0; i < elementos.size(); i++) // elem toma cada valor del vector elementos
     {
+        string elem = elementos[0];
         if (esNumero(elem))
         {
             valores.push_back(stoi(elem)); // stoi tranforma de string a entero
@@ -121,6 +122,15 @@ int Celdas::calcularOperacion(const string& CadenaIngresada)
         }
         else if (esOperador(elem[0]))
         {
+            if (elem[0] == '*' || elem[0] == '/')
+            {
+                int a = valores.back(); valores.pop_back();
+                i++;
+                string elementoSiguiente = elementos[i];
+                int b = esNumero(elementoSiguiente) ? stoi(elementoSiguiente) : obtenerValorCelda(elementoSiguiente);
+                valores.push_back(realizarOperacion(a, b, elem[0]));
+            }
+            
             operadores.push_back(elem[0]);
         }
     }
