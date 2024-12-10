@@ -64,7 +64,7 @@ vector<string> Celdas::dividirOperacion(const string& CadenaIngresada)
     string temp;
     for (auto i : CadenaIngresada) // Se va a dividir la cadena ingresada por el usuario, i toma cada elemento de CadenaIngresada
     {
-        if ((i >= '0' && i <= '9') || (i >= 'A' && i <= 'Z'))
+        if ((i >= '0' && i <= '9') || (i >= 'A' && i <= 'Z') || (i == '.'))
         {
             temp += i;
         }
@@ -91,13 +91,13 @@ int Celdas::realizarOperacion(int a, int b, char op)
     switch (op)
     {
     case '+':
-    return a + b;
+        return a + b;
     case '-':
-    return a - b;
+            return a - b;
     case '*':
-    return a * b;
+        return a * b;
     case '/':
-    return b =! 0 ? a / b : 0; // se pregunta si b es diferente de cero, si es así, opera.
+        return b != 0 ? a / b : 0; // se pregunta si b es diferente de cero, si es así, opera.
     default:
     return 0;
     }
@@ -109,39 +109,43 @@ int Celdas::calcularOperacion(const string& CadenaIngresada)
     vector<int> valores;
     vector<char> operadores;
     
-    for (auto i = 0; i < elementos.size(); i++) // elem toma cada valor del vector elementos
-    {
-        string elem = elementos[0];
-        if (esNumero(elem))
-        {
-            valores.push_back(stoi(elem)); // stoi tranforma de string a entero
+    for (const auto& elem : elementos) {
+    if (esNumero(elem)) {
+        valores.push_back(stoi(elem));  // convierte el string a entero con stoi
+    } else if (ValidarCelda(elem)) {
+        valores.push_back(obtenerValorCelda(elem));  // obtiene el valor de la celda
+    } else if (esOperador(elem[0])) {
+        while (!operadores.empty() && tieneMayorPrioridad(operadores.back(), elem[0])) {
+            int b = valores.back(); // hace caso al signo con mayor prioridad
+            valores.pop_back();
+            int a = valores.back();
+            valores.pop_back();
+            char oper = operadores.back();
+            operadores.pop_back();
+            valores.push_back(realizarOperacion(a, b, oper)); // hace la operación
         }
-        else if (ValidarCelda(elem))
-        {
-            valores.push_back(obtenerValorCelda(elem));
-        }
-        else if (esOperador(elem[0]))
-        {
-            if (elem[0] == '*' || elem[0] == '/')
-            {
-                int a = valores.back(); valores.pop_back();
-                i++;
-                string elementoSiguiente = elementos[i];
-                int b = esNumero(elementoSiguiente) ? stoi(elementoSiguiente) : obtenerValorCelda(elementoSiguiente);
-                valores.push_back(realizarOperacion(a, b, elem[0]));
-            }
-            
-            operadores.push_back(elem[0]);
-        }
+        operadores.push_back(elem[0]);  // guarda el operador actual
     }
+}
+
 
     while (!operadores.empty()) // si no está vacío
     {
-        int a = valores.back(); valores.pop_back();
-        int b = valores.back(); valores.pop_back();
-        char op = operadores.back(); operadores.pop_back();
-        valores.push_back(realizarOperacion(b, a, op)); // opera
+         int b = valores.back();
+        valores.pop_back();
+        int a = valores.back();
+        valores.pop_back();
+        char oper = operadores.back();
+        operadores.pop_back();
+        valores.push_back(realizarOperacion(a, b, oper)); // opera
     }
     
     return valores.back(); // resultado final;
+}
+
+bool Celdas::tieneMayorPrioridad(char a, char b) {
+    if ((a == '*' || a == '/') && (b == '+' || b == '-')) {
+        return true;  // '*' y '/' es más importante que '+' y '-'
+    }
+    return false; 
 }

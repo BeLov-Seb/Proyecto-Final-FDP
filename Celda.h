@@ -19,6 +19,7 @@ public:
     bool esNumero(const std::string&);
     int realizarOperacion(int, int, char);
     std::vector<std::string> dividirOperacion(const std::string&);
+    bool tieneMayorPrioridad(char, char);
 
 private:
     void matrizInicialHoja();

@@ -38,16 +38,16 @@ bool Hoja::ingresarOperacion(const string& CadenaIngresada)
     {
         return false;
     }
-    string celda = CadenaIngresada.substr(0, posicion_igual);
+    string celdaD = CadenaIngresada.substr(0, posicion_igual);
     string expresion = CadenaIngresada.substr(posicion_igual + 1);
 
-    if (!celdas.ValidarCelda(celda))
+    if (!celdas.ValidarCelda(celdaD))
     {
         return false;
     }
     
     int resultado = celdas.calcularOperacion(expresion);
-    celdas.asignarValorCelda(celda, resultado);
+    celdas.asignarValorCelda(celdaD, resultado);
     return true;
 }
 
