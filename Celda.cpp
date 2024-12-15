@@ -1,4 +1,4 @@
-#include <sstream>
+#include <sstream> // permite construir cadenas de texto con cualquier tipo de dato
 #include "Celda.h"
 #include <iostream>
 #include <map>
@@ -18,8 +18,8 @@ void Celdas::matrizInicialHoja() // Hacemos nuestra matriz inicial
         for (auto j = 1; j <= 9; j++)
         {
             stringstream ss;
-            ss << i << j;
-            mapadeceldas[ss.str()] = 0; // celdas = 0
+            ss << i << j; // ss recibe un entero j y luego un caracter i, así genera als celdas como: A1, E9, etc
+            mapadeceldas[ss.str()] = 0; // ss.str() es la cadena Caracter-Entero que es la celda, y a esta le asigna el valor de 0
         }
     }
     
@@ -75,11 +75,11 @@ vector<string> Celdas::dividirOperacion(const string& CadenaIngresada)
                 elementos.push_back(temp); // agrega elementos al final del vector.
                 temp.clear(); // elimina los elementos del contenedor.
             }
-            string op(1, i);
+            string op(1, i); // crea una cadena llamada op, que tiene solo 1 wespacio y este es rellenado por i
             elementos.push_back(op);  
         }
     }
-    if (!temp.empty())
+    if (!temp.empty()) // si temp no está vacío
     {
         elementos.push_back(temp); // Agrega el último número o celda
     }
@@ -115,14 +115,14 @@ int Celdas::calcularOperacion(const string& CadenaIngresada)
     } else if (ValidarCelda(elem)) {
         valores.push_back(obtenerValorCelda(elem));  // obtiene el valor de la celda
     } else if (esOperador(elem[0])) {
-        while (!operadores.empty() && tieneMayorPrioridad(operadores.back(), elem[0])) {
-            int b = valores.back(); // hace caso al signo con mayor prioridad
-            valores.pop_back();
+        while (!operadores.empty() && tieneMayorPrioridad(operadores.back(), elem[0])) { // hace caso al signo con mayor prioridad
+            int b = valores.back(); // obtiene una referencia del último elemento agregado al vector
+            valores.pop_back(); // elimina el ultimo elemento del vector valores
             int a = valores.back();
             valores.pop_back();
-            char oper = operadores.back();
-            operadores.pop_back();
-            valores.push_back(realizarOperacion(a, b, oper)); // hace la operación
+            char oper = operadores.back(); // obtiene el ultimo signo agregado (+,-,*,/) 
+            operadores.pop_back(); // elimina el ultimo signo del vector operadores
+            valores.push_back(realizarOperacion(a, b, oper)); // hace la operación y seguidamente ingresa el resultado al vector valores
         }
         operadores.push_back(elem[0]);  // guarda el operador actual
     }
@@ -137,7 +137,7 @@ int Celdas::calcularOperacion(const string& CadenaIngresada)
         valores.pop_back();
         char oper = operadores.back();
         operadores.pop_back();
-        valores.push_back(realizarOperacion(a, b, oper)); // opera
+        valores.push_back(realizarOperacion(a, b, oper)); 
     }
     
     return valores.back(); // resultado final;

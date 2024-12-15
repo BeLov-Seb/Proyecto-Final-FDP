@@ -33,15 +33,15 @@ void Hoja::mostrarmatriz()
 
 bool Hoja::ingresarOperacion(const string& CadenaIngresada)
 {
-    size_t posicion_igual = CadenaIngresada.find('='); //busca '='
-    if (posicion_igual == string::npos) // si no encuentra '=' retorna 'false'
+    size_t posicion_igual = CadenaIngresada.find('='); //busca '=', size_t ayuda saber el tamaño del vector hasta encontrar '='
+    if (posicion_igual == string::npos) // si no encuentra '=' retorna false
     {
         return false;
     }
-    string celdaD = CadenaIngresada.substr(0, posicion_igual);
-    string expresion = CadenaIngresada.substr(posicion_igual + 1);
+    string celdaD = CadenaIngresada.substr(0, posicion_igual); // extraemos la cadena que va desde 0 hasta la posición de '='
+    string expresion = CadenaIngresada.substr(posicion_igual + 1); // extraemos la cadena que va desde la posición siguiente a '=' hasta el final de la cadena
 
-    if (!celdas.ValidarCelda(celdaD))
+    if (!celdas.ValidarCelda(celdaD)) // si celdaD no es una celda, retorna false
     {
         return false;
     }
